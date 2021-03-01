@@ -18,7 +18,7 @@ def greedy_nearest_neighbour(distance_matrix):
         visited.append(min_id)
         dist += min(node_distances)
 
-        if len(visited) == len(distance_matrix) - 2:
+        if len(visited) == len(distance_matrix):
             all_visited = True
 
     print(dist)
