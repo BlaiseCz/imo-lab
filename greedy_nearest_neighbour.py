@@ -1,22 +1,21 @@
 def greedy_nearest_neighbour(distance_matrix):
-    visited = [0]
+    visited = []
     dist = 0
     current_id = 0
     all_visited = False
 
-    copy_distance_matrix = distance_matrix[:]
-
     while not all_visited:
-        visited.sort(reverse=True)
-        node_distances = copy_distance_matrix[current_id]
-        for visited_node in visited:
-            node_distances.pop(visited_node)
-        min_id = node_distances.index(min(node_distances))
+        visited.append(current_id)
 
-        copy_distance_matrix.pop(current_id)
-        current_id = min_id
-        visited.append(min_id)
-        dist += min(node_distances)
+        node_distances = distance_matrix[current_id]
+        min_dist = max(node_distances)
+        for node_id, node_dist in enumerate(node_distances):
+            if node_id not in visited:
+                if node_dist < min_dist:
+                    min_dist = node_id
+                    current_id = node_id
+
+        dist += min_dist
 
         if len(visited) == len(distance_matrix):
             all_visited = True
