@@ -6,5 +6,5 @@ def visualize(res, coordinates):
     res_coord_y = [coordinates[r][1] for r in res]
     res_coord_y.append(coordinates[res[0]][1])
     plt.axis('off')
-    plt.plot(res_coord_x, res_coord_y, '-o', markersize=3)
+    plt.plot(res_coord_x, res_coord_y, '-o', markersize=4)
     plt.show()
