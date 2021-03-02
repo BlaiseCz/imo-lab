@@ -50,8 +50,8 @@ def animate(results, coordinates, cycle=True):
         x2 = [coordinates[r][0] for r in results[i]]
         y2 = [coordinates[r][1] for r in results[i]]
         if cycle:
-            x2.append(coordinates[results[0][0]][0])
-            y2.append(coordinates[results[0][0]][1])
+            x2.append(coordinates[results[i][0]][0])
+            y2.append(coordinates[results[i][0]][1])
 
         xlist = [x1, x2]
         ylist = [y1, y2]
