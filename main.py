@@ -13,7 +13,8 @@ if __name__ == '__main__':
     # greedy_cycle(distance_matrix, start_with=0)
     # greedy_cycle(distance_matrix, start_with=62)
     # greedy_cycle(distance_matrix, start_with=46)
-    animate(histp, coordinates)
-    visualize(resp, coordinates)
-    animate(histc, coordinates, cycle=False)
+    animate(histc, coordinates)
     visualize(resc, coordinates)
+
+    animate(histp, coordinates, cycle=False)
+    visualize(resp, coordinates)
