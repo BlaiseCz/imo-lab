@@ -9,6 +9,7 @@ def visualize(res, coordinates, cycle=True):
     if cycle:
         res_coord_x.append(coordinates[res[0]][0])
         res_coord_y.append(coordinates[res[0]][1])
+    plt.axis('equal')
     plt.axis('off')
     plt.xlim(min(xcoord)-100, max(xcoord)+100)
     plt.ylim(min(ycoord)-100, max(ycoord)+100)
@@ -20,10 +21,14 @@ def animate(results, coordinates, cycle=True):
     xcoord = [x for x, y in coordinates]
     ycoord = [y for x, y in coordinates]
 
+    minlim = min(min(xcoord), min(ycoord))
+    maxlim = max(max(xcoord), max(ycoord))
+
     fig = plt.figure()
     ax1 = plt.axes(
         xlim=(min(xcoord)-100, max(xcoord)+100),
         ylim=(min(ycoord)-100, max(ycoord)+100))
+    ax1.set_aspect('equal')
     ax1.set_visible(False)
     line, = ax1.plot([], [])
     lines = []

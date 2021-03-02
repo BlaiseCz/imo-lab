@@ -15,5 +15,5 @@ if __name__ == '__main__':
     # greedy_cycle(distance_matrix, start_with=46)
     animate(histp, coordinates)
     visualize(resp, coordinates)
-    animate(histc, coordinates)
+    animate(histc, coordinates, cycle=False)
     visualize(resc, coordinates)
