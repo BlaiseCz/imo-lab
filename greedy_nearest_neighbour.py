@@ -1,10 +1,14 @@
+from copy import deepcopy
+
 def greedy_nearest_neighbour(distance_matrix, start_with):
     visited = []
+    history = []
     dist = 0
     current_id = start_with
 
     while not len(visited) == len(distance_matrix):
         visited.append(current_id)
+        history.append(deepcopy(visited))
 
         node_distances = distance_matrix[current_id]
         min_dist = max(node_distances)
@@ -18,4 +22,4 @@ def greedy_nearest_neighbour(distance_matrix, start_with):
         dist += min_dist
 
     print(dist)
-    return visited
+    return visited, history

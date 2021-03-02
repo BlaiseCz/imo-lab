@@ -1,18 +1,22 @@
+from copy import deepcopy
+
 def greedy_cycle(distance_matrix, start_with):
     cycle = [start_with]
+    history = [cycle]
 
     current_node = distance_matrix[start_with]
     first_nearest_node_dist = sorted(current_node)[1]
     first_nearest_node_id = current_node.index(first_nearest_node_dist)
 
     cycle.append(first_nearest_node_id)
+    history.append(deepcopy(cycle))
 
     while not len(cycle) == len(distance_matrix):
         nearest_node_id = find_node_closest_to_current_cycle(cycle, distance_matrix)
         cycle.append(nearest_node_id)
+        history.append(deepcopy(cycle))
 
-    print(cycle)
-    return cycle
+    return cycle, history
 
 
 def find_node_closest_to_current_cycle(current_cycle, distance_matrix):
