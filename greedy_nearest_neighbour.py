@@ -18,4 +18,4 @@ def greedy_nearest_neighbour(distance_matrix, start_with):
         dist += min_dist
 
     print(dist)
-    return dist
+    return visited
