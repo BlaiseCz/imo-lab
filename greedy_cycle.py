@@ -1,5 +1,34 @@
 from copy import deepcopy
 
+def greedy_cycle_propose(distance_matrix, visited, current_cycle):
+
+    # current_node = distance_matrix[start_with]
+    # first_nearest_node_dist = sorted(current_node)[1]
+    # first_nearest_node_id = current_node.index(first_nearest_node_dist)
+
+    # cycle.append(first_nearest_node_id)
+
+    visited_node = 0
+    if len(current_cycle) == 1:
+        current_node = distance_matrix[current_cycle[0]]
+        first_nearest_node_dist = sorted(current_node)[1]
+        first_nearest_node_id = current_node.index(first_nearest_node_dist)
+
+        cycle = [current_cycle[0]]
+        cycle.append(first_nearest_node_id)
+        visited_node = first_nearest_node_id
+
+    else:
+        cycle = find_node_closest_to_current_cycle(current_cycle, distance_matrix,
+                                                   visited=visited)
+        for i, node in enumerate(cycle):
+            if i >= len(current_cycle) or node != current_cycle[i]:
+                visited_node = node
+                break
+
+
+
+    return cycle, visited_node
 
 def greedy_cycle(distance_matrix, start_with):
     cycle = [start_with]
@@ -20,11 +49,12 @@ def greedy_cycle(distance_matrix, start_with):
     return cycle, history
 
 
-def find_node_closest_to_current_cycle(current_cycle, distance_matrix):
+def find_node_closest_to_current_cycle(current_cycle, distance_matrix,
+                                       visited=[]):
     nodes_calculated_cycles = []
 
     for node_id in range(len(distance_matrix)):
-        if node_id not in current_cycle:
+        if (node_id not in current_cycle) and (node_id not in visited):
             nodes_calculated_cycles.append(calculate_dist_with_new_node(current_cycle, node_id, distance_matrix))
 
     best_match_cycle = min(nodes_calculated_cycles, key=lambda x: x['path_dist'])

@@ -17,7 +17,7 @@ def visualize(res, coordinates, cycle=True):
     plt.plot(xcoord, ycoord, 'o', color='black', markersize=4)
     plt.show()
 
-def animate(results, coordinates, cycle=True):
+def animate_old(results, coordinates, cycle=True):
 
     # setting up aspects and limits
     xcoord = [x for x, y in coordinates]
@@ -71,11 +71,11 @@ def animate(results, coordinates, cycle=True):
     plt.show()
 
 
-def animate_two(history, coordinates, cycle=[True]):
+def animate(history, coordinates, cycle=[True]):
     if type(history[0][0]) is not list:
-        raise ValueError('Each element of history should be array of plots.')
+        history = [[h] for h in history]
     if type(cycle) is not list:
-        raise ValueError('cycle should be list of booleans with length equal to number of plots')
+        cycle = [cycle]
     plots_num = len(history[0])
 
     # setting up aspects and limits
@@ -129,7 +129,9 @@ def animate_two(history, coordinates, cycle=[True]):
 
         return lines
 
+    frames = list(range(len(history)))
+    frames.extend([len(history)-1]*5)
     anim = FuncAnimation(fig, animate, init_func=init,
-                                   frames=range(len(history)), blit=True)
+                                   frames=frames, blit=True)
 
     plt.show()
