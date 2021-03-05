@@ -41,3 +41,21 @@ def k_regret_connector(algos, distance_matrix, k=1):
                 and len(enough)+1 != len(cycles):
             enough.append(best_algo)
     return history
+
+def turns_connector(algos, distance_matrix):
+    cycles = sample(list(range(len(distance_matrix))), len(algos))
+    cycles = [[c] for c in cycles]
+    visited = []
+    for c in cycles:
+        visited += c
+
+    history = [deepcopy(cycles)]
+
+    while len(visited) != len(distance_matrix):
+        for ai, algo in enumerate(algos):
+            cycle, visited_node = algo(distance_matrix, visited, cycles[ai])
+            cycles[ai] = cycle
+            history.append(deepcopy(cycles))
+            visited.append(visited_node)
+    return history
+
