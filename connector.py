@@ -1,28 +1,43 @@
 from copy import deepcopy
-def k_regret_connector(algo_1, algo_2, distance_matrix, k=1):
-    visited = [1, 10]
+from distance_counter import calculate_distance
+from random import sample
+def k_regret_connector(algos, distance_matrix, k=1):
 
-    # TODO randomize start node
-    cycle_1 = [1]
-    cycle_2 = [10]
+    cycles = sample(list(range(len(distance_matrix))), len(algos))
+    cycles = [[c] for c in cycles]
+    visited = []
+    for c in cycles:
+        visited += c
 
-    history = []
+    history = [deepcopy(cycles)]
+    enough = []
 
-    if k > 1:
-        raise NotImplementedError
-    #     for i in range(len(distance_matrix)):
-    #         # TODO: zapisywać żal
-    #         for j in range(k):
-    #             cycle_1_new, visited_node_1 = algo_1(distance_matrix, visited, cycle_1)
-    #             cycle_2_new, visited_node_2 = algo_2(distance_matrix, visited, cycle_2)
-    else:
-        i = 0
-        while len(visited) != len(distance_matrix):
-            if i%2 == 0:
-                cycle_1, visited_node = algo_1(distance_matrix, visited, cycle_1)
-            else:
-                cycle_2, visited_node = algo_2(distance_matrix, visited, cycle_2)
-            history.append(deepcopy((cycle_1, cycle_2)))
-            visited.append(visited_node)
-            i += 1
-        return history
+
+    while sum([len(c) for c in cycles]) < len(distance_matrix):
+        min_regret = int(10e20)
+        best_algo = -1
+        for i, algo in enumerate(algos):
+            if i in enough:
+                continue
+            best_cycle, best_node = algo(distance_matrix, visited, cycles[i])
+            best_cost = calculate_distance(distance_matrix, best_cycle) - calculate_distance(distance_matrix, cycles[i])
+            regret = 0
+            sub_visited = visited + [best_node]
+            for ik in range(k-1):
+                sub_cycle, sub_node = algo(distance_matrix, sub_visited,
+                                           cycles[i])
+                sub_cost = calculate_distance(distance_matrix, sub_cycle) - calculate_distance(distance_matrix, cycles[i])
+                regret += sub_cost - best_cost
+                sub_visited.append(sub_node)
+            if regret < min_regret:
+                min_regret = regret
+                best_algo = i
+        res_cycle, res_node = algos[best_algo](distance_matrix, visited,
+                                               cycles[best_algo])
+        cycles[best_algo] = deepcopy(res_cycle)
+        visited.append(res_node)
+        history.append(deepcopy(cycles))
+        if len(cycles[best_algo]) >= len(distance_matrix) // len(cycles) \
+                and len(enough)+1 != len(cycles):
+            enough.append(best_algo)
+    return history

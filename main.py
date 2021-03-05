@@ -12,13 +12,9 @@ if __name__ == '__main__':
     print(overview)
     distance_matrix = count_dist(coordinates)
     # resc, histc = greedy_cycle(distance_matrix, start_with=10)
-    # resp, histp = greedy_nearest_neighbour(distance_matrix, start_with=10)
-    history_double_nn = k_regret_connector(greedy_nearest_neighbour_propose,
-                                           greedy_cycle_propose,
-                                           distance_matrix)
-    # history_quadriple_nn = [(history_double_nn[i][0][::2],
-    #                          history_double_nn[i][1][::2],
-    #                          history_double_nn[i][0][1::2],
-    #                          history_double_nn[i][1][1::2])\
-    #                         for i in range(len(history_double_nn))]
-    animate_two(history_double_nn, coordinates, cycle=[False, True])
+    resp, histp = greedy_nearest_neighbour(distance_matrix, start_with=10)
+    history_double_nn = k_regret_connector([ greedy_nearest_neighbour_propose,
+                                            greedy_nearest_neighbour_propose],
+                                           distance_matrix, k=1)
+    animate(history_double_nn, coordinates, cycle=[False,False])
+    animate(histp, coordinates, cycle=False)

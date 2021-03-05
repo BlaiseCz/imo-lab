@@ -14,3 +14,11 @@ def count_dist(coordinates):
         # node_id += 1
 
     return distance_matrix
+
+def calculate_distance(distance_matrix, cycle):
+    res = 0
+    for i in range(len(cycle)):
+        res += distance_matrix[cycle[i]-1][cycle[i]]
+    return res
+
+
