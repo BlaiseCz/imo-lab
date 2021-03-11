@@ -1,6 +1,7 @@
 from copy import deepcopy
 import math
 
+
 def greedy_cycle_propose(distance_matrix, visited, current_cycle):
     mini = int(10e20)
     chosen_point = -1
@@ -9,8 +10,8 @@ def greedy_cycle_propose(distance_matrix, visited, current_cycle):
         for ip, point in enumerate(distance_matrix):
             if ip in visited:
                 continue
-            dist_added = distance_matrix[current_cycle[i-1]][ip] + distance_matrix[node][ip]
-            - distance_matrix[current_cycle[i-1]][node]
+            dist_added = distance_matrix[current_cycle[i - 1]][ip] + distance_matrix[node][ip] \
+                         - distance_matrix[current_cycle[i - 1]][node]
 
             if dist_added < mini:
                 mini = dist_added
@@ -45,7 +46,7 @@ def find_node_closest_to_current_cycle(current_cycle, distance_matrix):
     nodes_calculated_cycles = []
 
     for node_id in range(len(distance_matrix)):
-        if (node_id not in current_cycle):
+        if node_id not in current_cycle:
             nodes_calculated_cycles.append(calculate_dist_with_new_node(current_cycle, node_id, distance_matrix))
 
     best_match_cycle = min(nodes_calculated_cycles, key=lambda x: x['path_dist'])
