@@ -4,8 +4,8 @@ from random import sample
 
 
 def k_regret_connector(algos, distance_matrix, k=1):
-    # cycles = sample(list(range(len(distance_matrix))), len(algos))
-    cycles = [25, 94]
+    cycles = sample(list(range(len(distance_matrix))), len(algos))
+    # cycles = [25, 94]
     picked_nodes = deepcopy(cycles)
 
     cycles = [[c] for c in cycles]
@@ -48,8 +48,8 @@ def k_regret_connector(algos, distance_matrix, k=1):
 
 
 def turns_connector(algos, distance_matrix):
-    # cycles = sample(list(range(len(distance_matrix))), len(algos))
-    cycles = [70, 57]
+    cycles = sample(list(range(len(distance_matrix))), len(algos))
+    # cycles = [70, 57]
     picked_nodes = deepcopy(cycles)
     cycles = [[c] for c in cycles]
     visited = []
