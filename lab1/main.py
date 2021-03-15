@@ -14,7 +14,7 @@ def calculate_path_dist(history_cycles, distance_matrix):
 
 if __name__ == '__main__':
     data_set = 'kroB'
-    overview, coordinates = read_file('data/' + data_set + '100.tsp')
+    overview, coordinates = read_file('lab1/data/' + data_set + '100.tsp')
     print(overview)
     distance_matrix = count_dist(coordinates)
     # resc, histc = greedy_cycle(distance_matrix, start_with=10)
