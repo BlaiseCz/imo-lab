@@ -2,7 +2,7 @@ from readFile import read_file
 from distance_counter import count_dist
 from greedy_nearest_neighbour import greedy_nearest_neighbour_propose
 from greedy_cycle import calculate_dist_of_given_cycle, greedy_cycle_propose
-from lab1.visualize import animate
+from visualize import animate
 from connector import turns_connector, k_regret_connector
 import numpy as np
 
@@ -15,7 +15,7 @@ def calculate_path_dist(history_cycles, distance_matrix):
 
 if __name__ == '__main__':
     data_set = 'kroB'
-    overview, coordinates = read_file('lab1/data/' + data_set + '100.tsp')
+    overview, coordinates = read_file('data/' + data_set + '100.tsp')
     print(overview)
     distance_matrix = count_dist(coordinates)
     # resc, histc = greedy_cycle(distance_matrix, start_with=10)
@@ -44,7 +44,7 @@ if __name__ == '__main__':
 
         reg_gc_dist_1, reg_gc_dist_2 = calculate_path_dist(history_cycle[-1], distance_matrix)
         results.append([reg_gc_dist_1 + reg_gc_dist_2, picked_nodes])
-        # animate(history_cycle, coordinates, cycle=[True, True])
+        animate(history_cycle, coordinates, cycle=[True, True])
 
     np_result = np.array(results, dtype=object)
     print(f'k-regret greedy_cycle minimum {np_result[:, 0].min(axis=0)} | maximum {np_result[:, 0].max(axis=0)} | mean {np_result[:, 0].mean(axis=0)}')
@@ -58,7 +58,7 @@ if __name__ == '__main__':
 
         nn_dist_1, nn_dist_2 = calculate_path_dist(history_nn[-1], distance_matrix)
         results.append([nn_dist_1 + nn_dist_2, picked_nodes])
-        # animate(history_nn, coordinates, cycle=[False, False])
+        animate(history_nn, coordinates, cycle=[False, False])
 
     np_result = np.array(results, dtype=object)
     print(f'nearest neighbour minimum {np_result[:, 0].min(axis=0)} | maximum {np_result[:, 0].max(axis=0)} | mean {np_result[:, 0].mean(axis=0)}')

@@ -17,8 +17,8 @@ def count_dist(coordinates):
 
 def calculate_distance(distance_matrix, cycle):
     res = 0
-    for i in range(len(cycle)):
-        res += distance_matrix[cycle[i]-1][cycle[i]]
+    for i in range(1, len(cycle)):
+        res += distance_matrix[cycle[i-1]][cycle[i]]
     return res
 
 

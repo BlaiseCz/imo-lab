@@ -1,5 +1,5 @@
 from copy import deepcopy
-from distance_counter import calculate_distance
+from lab1.distance_counter import calculate_distance
 from random import sample
 
 
@@ -49,7 +49,7 @@ def k_regret_connector(algos, distance_matrix, k=1):
 
 def turns_connector(algos, distance_matrix):
     cycles = sample(list(range(len(distance_matrix))), len(algos))
-    # cycles = [70, 57]
+    # cycles = [61, 4]
     picked_nodes = deepcopy(cycles)
     cycles = [[c] for c in cycles]
     visited = []
