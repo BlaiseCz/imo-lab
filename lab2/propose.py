@@ -39,7 +39,9 @@ def propose_in_route(distance_matrix, cycle1, cycle2):
 
 
 def propose_between_routes(distance_matrix, cycle1, cycle2):
-    for i1, i2 in itertools.product(range(len(cycle1)), range(len(cycle2))):
+    prod = list(itertools.product(range(len(cycle1)), range(len(cycle2))))
+    random.shuffle(prod)
+    for i1, i2 in prod:
         gain = 0
         gain += distance_matrix[cycle1[i1]][cycle1[(i1 - 1) % len(cycle1)]] + \
                 distance_matrix[cycle1[i1]][cycle1[(i1 + 1) % len(cycle1)]] + \

@@ -29,6 +29,7 @@ if __name__ == '__main__':
 
     # --------------------- tutorial użycia ------------------------------
     # NOTE: bez różnicy której funkcji propose używasz
+    # Wszystko jest już losowe
 
     # GREEDY:
     for gain, i1, i2, num in propose_in_route(distance_matrix,kk_path1,kk_path2):
