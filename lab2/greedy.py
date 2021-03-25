@@ -2,28 +2,6 @@ from copy import deepcopy
 from random import sample
 
 from lab1.distance_counter import calculate_distance
-from lab2.propose import propose_between_routes, propose_in_route
-
-
-# def greedy(distance_matrix, cycle1, cycle2, propose_method, history):
-#     while True:
-#         for cost, i1, i2, num in propose_method(distance_matrix, cycle1, cycle2):
-#             if cost > 0:
-#                 if num == 0:
-#                     cycle1[i1], cycle1[i2] = cycle1[i2], cycle1[i1]
-#                     history.append(deepcopy([cycle1, cycle1]))
-#                 elif num == 1:
-#                     cycle2[i1], cycle2[i2] = cycle2[i2], cycle2[i1]
-#                     history.append(deepcopy([cycle1, cycle1]))
-#                 elif num == 2:
-#                     # cycle1[i1], cycle2[i2] = cycle1[i2], cycle2[i1]
-#                     cycle1[i1], cycle2[i2] = cycle2[i2], cycle1[i1]
-#                     history.append(deepcopy([cycle1, cycle1]))
-#
-#                 break
-#         else:
-#             break
-#     return cycle1, cycle2, history
 
 
 def greedy_edges(path, distance_matrix, swap=6):
