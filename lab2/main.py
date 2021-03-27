@@ -3,7 +3,7 @@ from lab1.distance_counter import count_dist
 from lab1.greedy_cycle import greedy_cycle_propose
 from lab1.readFile import read_file
 from lab1.visualize import animate
-from lab2.greedy import greedy_edges, greedy_local_search
+from lab2.greedy import greedy_edges
 from lab2.propose import propose_in_route, propose_between_routes
 from lab2.random_path_generator import generate_random_path
 
@@ -26,10 +26,6 @@ if __name__ == '__main__':
     kk_path1 = history[-1][0]
     kk_path2 = history[-1][1]
     print(kk_path1)
-
-    greedy_local_search(distance_matrix, kk_path1, kk_path2, propose_in_route)
-
-    greedy_local_search(distance_matrix, kk_path1, kk_path2, propose_between_routes)
 
     path, dist, hist = greedy_edges(kk_path1, distance_matrix)
 
