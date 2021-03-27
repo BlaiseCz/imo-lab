@@ -17,6 +17,28 @@ def visualize(res, coordinates, cycle=True):
     plt.plot(xcoord, ycoord, 'o', color='black', markersize=4)
     plt.show()
 
+def visualize2(res1, res2, coordinates, cycle=True):
+    res_coord_x1 = [coordinates[r][0] for r in res1]
+    res_coord_y1 = [coordinates[r][1] for r in res1]
+    res_coord_x2 = [coordinates[r][0] for r in res2]
+    res_coord_y2 = [coordinates[r][1] for r in res2]
+    xcoord = [x for x, y in coordinates]
+    ycoord = [y for x, y in coordinates]
+    if cycle:
+        res_coord_x1.append(coordinates[res1[0]][0])
+        res_coord_y1.append(coordinates[res1[0]][1])
+        res_coord_x2.append(coordinates[res2[0]][0])
+        res_coord_y2.append(coordinates[res2[0]][1])
+    plt.axis('equal')
+    plt.axis('off')
+    plt.xlim(min(xcoord)-100, max(xcoord)+100)
+    plt.ylim(min(ycoord)-100, max(ycoord)+100)
+    plt.plot(res_coord_x1, res_coord_y1, '-', label='before')
+    plt.plot(res_coord_x2, res_coord_y2, '-', label='after')
+    plt.plot(xcoord, ycoord, 'o', color='black', markersize=4)
+    plt.legend()
+    plt.show()
+
 def animate_old(results, coordinates, cycle=True):
 
     # setting up aspects and limits
