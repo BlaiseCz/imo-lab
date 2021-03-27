@@ -1,5 +1,8 @@
 import random
+import time
 from copy import deepcopy
+
+import numpy as np
 
 from lab1.connector import k_regret_connector
 from lab1.distance_counter import count_dist, calculate_distance
@@ -37,17 +40,14 @@ def execute_example(distance_matrix, algorithm, propose_type, start_type="k_regr
 
     dist_1 = calculate_distance(distance_matrix, path1)
     dist_2 = calculate_distance(distance_matrix, path2)
+
     starting_dist = dist_1 + dist_2
-    print(
-        f'path1 = {dist_1} path2 = {dist_2}')
     path1, path2, history = algorithm(distance_matrix, path1, path2, propose_type, history)
 
     dist_1 = calculate_distance(distance_matrix, path1)
     dist_2 = calculate_distance(distance_matrix, path2)
 
-    print(
-        f'after local search\npath1 = {dist_1} path2 = {dist_2}  | with gain = {starting_dist - (dist_1 + dist_2)}')
-    animate(history, coordinates, cycle=[True, True])
+    return starting_dist, (dist_1 + dist_2)
 
 
 if __name__ == '__main__':
@@ -55,36 +55,66 @@ if __name__ == '__main__':
     overview, coordinates = read_file('data/' + data_set + '100.tsp')
     distance_matrix = count_dist(coordinates)
 
-    execute_example(distance_matrix, greedy, propose_in_route)
-    execute_example(distance_matrix, greedy, propose_between_routes)
+    algos = [[execute_example(distance_matrix, greedy, propose_in_route),
+              "greedy_propose_in_route_k_regret"],
+             [execute_example(distance_matrix, greedy, propose_between_routes),
+              "greedy_propose_between_routes_k_regret"],
+             [execute_example(distance_matrix, steepest, propose_in_route),
+              "steepest_propose_in_route_k_regret"],
+             [execute_example(distance_matrix, steepest, propose_between_routes),
+              "steepest_propose_between_routes_k_regret"],
+             [execute_example(distance_matrix, greedy, propose_in_route, start_type="random"),
+              "greedy_propose_in_route_random"],
+             [execute_example(distance_matrix, greedy, propose_between_routes, start_type="random"),
+              "greedy_propose_between_routes_random"],
+             [execute_example(distance_matrix, steepest, propose_in_route, start_type="random"),
+              "steepest_propose_in_route_random"],
+             [execute_example(distance_matrix, steepest, propose_between_routes, start_type="random"),
+              "steepest_propose_between_routes_random"]
+             ]
 
-    execute_example(distance_matrix, steepest, propose_in_route)
-    execute_example(distance_matrix, steepest, propose_between_routes)
+    results_to_save = []
+    results = []
+    times = []
+    for algo in algos:
+        for x in range(100):
+            start = time.time()
+            start_dist, end_dist = algo[0]
+            results.append([start_dist, end_dist])
+            times.append(time.time() - start)
 
-    print(f'\n\nrandom cycles:\n')
+        np_result = np.array(results, dtype=object)
+        np_times = np.array(times, dtype=object)
+        print(f'\n{algo[1]}')
+        print(
+            f'before | minimum {np_result[:, 0].min(axis=0)} | maximum {np_result[:, 0].max(axis=0)} | mean {np_result[:, 0].mean(axis=0)}')
+        print(
+            f'after | minimum  {np_result[:, 1].min(axis=0)} | maximum {np_result[:, 1].max(axis=0)} | mean {np_result[:, 1].mean(axis=0)}')
+        print(f'job done in {np.sum(np_times)} | avg = {np.average(np_times)} | max = {np.max(np_times)}')
 
-    execute_example(distance_matrix, greedy, propose_in_route, start_type="random")
-    execute_example(distance_matrix, greedy, propose_between_routes, start_type="random")
+        results_to_save.append([algo[1],
+                                np_result[:, 0].min(axis=0), np_result[:, 0].max(axis=0), np_result[:, 0].mean(axis=0),
+                                np_result[:, 1].min(axis=0), np_result[:, 1].max(axis=0), np_result[:, 1].mean(axis=0)])
 
-    execute_example(distance_matrix, steepest, propose_in_route, start_type="random")
-    execute_example(distance_matrix, steepest, propose_between_routes, start_type="random")
+    np_results_to_save = np.array(results_to_save)
+    np.savetxt(data_set + '.csv', np_results_to_save, delimiter=",", fmt="%s")
 
-    history, _ = k_regret_connector([greedy_cycle_propose,
-                                     greedy_cycle_propose],
-                                    distance_matrix, k=1)
-    c1 = history[-1][0]
-    c2 = history[-1][1]
-
-    dist_1 = calculate_distance(distance_matrix, c1)
-    dist_2 = calculate_distance(distance_matrix, c2)
-    starting_dist = dist_1 + dist_2
-    print(
-        f'path1 = {dist_1} path2 = {dist_2}')
-    best_cycle1, best_cycle2, history = random_walk(distance_matrix, c1, c2, propose_in_route, history, time_allowed=1)
-
-    dist_1 = calculate_distance(distance_matrix, best_cycle1)
-    dist_2 = calculate_distance(distance_matrix, best_cycle2)
-
-    animate(history, coordinates, cycle=[True, True])
-    print(
-        f'after local search\npath1 = {dist_1} path2 = {dist_2}  | with gain = {starting_dist - (dist_1 + dist_2)}')
+    # history, _ = k_regret_connector([greedy_cycle_propose,
+    #                                  greedy_cycle_propose],
+    #                                 distance_matrix, k=1)
+    # c1 = history[-1][0]
+    # c2 = history[-1][1]
+    #
+    # dist_1 = calculate_distance(distance_matrix, c1)
+    # dist_2 = calculate_distance(distance_matrix, c2)
+    # starting_dist = dist_1 + dist_2
+    # print(
+    #     f'path1 = {dist_1} path2 = {dist_2}')
+    # best_cycle1, best_cycle2, history = random_walk(distance_matrix, c1, c2, propose_in_route, history, time_allowed=1)
+    #
+    # dist_1 = calculate_distance(distance_matrix, best_cycle1)
+    # dist_2 = calculate_distance(distance_matrix, best_cycle2)
+    #
+    # animate(history, coordinates, cycle=[True, True])
+    # print(
+    #     f'after random walk\npath1 = {dist_1} path2 = {dist_2}  | with gain = {starting_dist - (dist_1 + dist_2)}')
