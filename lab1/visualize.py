@@ -42,7 +42,7 @@ def visualize2(res1, res2, coordinates, cycle=True):
     plt.xlim(min(xcoord)-100, max(xcoord)+100)
     plt.ylim(min(ycoord)-100, max(ycoord)+100)
     plt.plot(res_coord_x10, res_coord_y10, '-', label='before', color='red')
-    plt.plot(res_coord_x1l, res_coord_y11, '-', label='before', color='orange')
+    plt.plot(res_coord_x11, res_coord_y11, '-', label='before', color='orange')
     plt.plot(res_coord_x20, res_coord_y20, '-', label='after', color='green')
     plt.plot(res_coord_x21, res_coord_y21, '-', label='after', color='blue')
     plt.plot(xcoord, ycoord, 'o', color='black', markersize=4)
