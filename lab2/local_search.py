@@ -45,7 +45,7 @@ def greedy(distance_matrix, c1, c2, propose_method, history):
     return cycle1, cycle2, history
 
 
-def steepest(distance_matrix, c1, c2, propose_method, history):
+def steepest_lab2(distance_matrix, c1, c2, propose_method, history):
     cycle1 = deepcopy(c1)
     cycle2 = deepcopy(c2)
     while True:
