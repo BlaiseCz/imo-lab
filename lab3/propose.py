@@ -5,12 +5,6 @@ from copy import deepcopy
 from lab1.distance_counter import calculate_distance
 from lab2.local_search import set_ids_order
 
-def propose_for_nodes(distance_matrix: list, cycle1: list, cycle2: list):
-    combi = itertools.combinations(range(len(distance_matrix)), 2)
-    for city1, city2 in combi:
-        #FIXME: sprawdz czy powinno się zmieniać cykle bez sprawdzania gaina
-        gain = switch_nodes_ver2(distance_matrix, cycle1, cycle2, city1, city2)
-    return gain
 
 def propose_in_route(distance_matrix, cycle1, cycle2):
     # first cycle
@@ -45,34 +39,6 @@ def propose_in_route(distance_matrix, cycle1, cycle2):
 
         yield gain, i1, i2, num
 
-def switch_nodes_ver2(distance_matrix, cycle1, cycle2, city1, city2):
-    try:
-        i1 = cycle1.index(city1)
-        chosen_cycle1 = cycle1
-    except ValueError:
-        i1 = cycle2.index(city1)
-        chosen_cycle1 = cycle2
-    try:
-        i2 = cycle1.index(city2)
-        chosen_cycle2 = cycle1
-    except ValueError:
-        i2 = cycle2.index(city2)
-        chosen_cycle2 = cycle2
-    gain = 0
-
-    # TODO: policz gaina dla dwóch cykli
-    if (i1 - 1) % len(cycle) != i2:
-        gain += distance_matrix[cycle[i1]][cycle[(i1 - 1) % len(cycle)]] + \
-                distance_matrix[cycle[i2]][cycle[(i2 + 1) % len(cycle)]]
-        gain -= distance_matrix[cycle[i1]][cycle[(i2 + 1) % len(cycle)]] + \
-                distance_matrix[cycle[i2]][cycle[(i1 - 1) % len(cycle)]]
-    if (i2 - 1) % len(cycle) != i1:
-        gain += distance_matrix[cycle[i1]][cycle[(i1 + 1) % len(cycle)]] + \
-                distance_matrix[cycle[i2]][cycle[(i2 - 1) % len(cycle)]]
-        gain -= distance_matrix[cycle[i1]][cycle[(i2 - 1) % len(cycle)]] + \
-                distance_matrix[cycle[i2]][cycle[(i1 + 1) % len(cycle)]]
-    return gain
-
 
 def switch_nodes(cycle, distance_matrix, i1, i2):
     gain = 0
@@ -94,7 +60,6 @@ def switch_edges(cycle, distance_matrix, i1, i2):
 
     updated_path = deepcopy(cycle)
     updated_path[first_node:second_node] = updated_path[first_node:second_node][::-1]
-    #TODO fix
     gain = 0
     gain += distance_matrix[cycle[first_node]][cycle[(first_node - 1) % len(cycle)]] + \
             distance_matrix[cycle[second_node-1]][cycle[(second_node) % len(cycle)]]

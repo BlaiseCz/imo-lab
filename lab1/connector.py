@@ -3,9 +3,11 @@ from lab1.distance_counter import calculate_distance
 from random import sample
 
 
-def k_regret_connector(algos, distance_matrix, k=1):
+def k_regret_connector(algos, distance_matrix, start_with=None, k=1):
     cycles = sample(list(range(len(distance_matrix))), len(algos))
-    # cycles = [25, 94]
+
+    if start_with is not None:
+        cycles = start_with
     picked_nodes = deepcopy(cycles)
 
     cycles = [[c] for c in cycles]
