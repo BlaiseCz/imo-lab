@@ -5,8 +5,17 @@ from copy import deepcopy
 from lab1.distance_counter import calculate_distance
 from lab2.local_search import set_ids_order
 
-def propose_nodes_switch(distance_matrix, cycle1: list, cycle2: list):
-    for node1, node2 in itertools.combinations(cycle1 + cycle2, 2):
+def propose_nodes_switch(distance_matrix, cycle1: list, cycle2: list,
+                         fresh=set()):
+    # jeżeli sprawdzamy wszystkie wierzchołki
+    if not fresh:
+        proposer = itertools.combinations(cycle1 + cycle2, 2)
+    # jeżeli proponujemy tylko z częścią wierzchołków (zamienione i ich sąsiedzi)
+    # do fresh dodawaj numery wierzchołków a nie indeksy w tablicy!
+    else:
+        proposer = itertools.product(fresh, set(cycle1+cycle2) - fresh)
+
+    for node1, node2 in proposer:
         # sprawdzamy w których cyklach są wybrane node'y
         where = []
         if node1 in cycle1:
@@ -34,16 +43,16 @@ def propose_nodes_switch(distance_matrix, cycle1: list, cycle2: list):
             gain = gain_switch_nodes_between(distance_matrix, cycle1, cycle2, i1,i2)
         # oba wierzchołki są w tym samym cyklu
         else:
+            # oba wierzchołki są w cycle1
             if where[0] == 0:
                 gain = gain_switch_nodes(cycle1, distance_matrix, i1, i2)
                 num = 0
+            # oba wierzchołki są w cycle2
             else:
                 gain = gain_switch_nodes(cycle2, distance_matrix, i1, i2)
                 num = 1
 
         yield gain, i1, i2, num
-
-
 
 def propose_in_route(distance_matrix, cycle1, cycle2):
     # first cycle
