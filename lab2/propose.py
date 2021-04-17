@@ -94,13 +94,14 @@ def switch_edges(cycle, distance_matrix, i1, i2):
 
     updated_path = deepcopy(cycle)
     updated_path[first_node:second_node] = updated_path[first_node:second_node][::-1]
-    #TODO fix
-    gain = 0
-    gain += distance_matrix[cycle[first_node]][cycle[(first_node - 1) % len(cycle)]] + \
-            distance_matrix[cycle[second_node-1]][cycle[(second_node) % len(cycle)]]
 
-    gain -= distance_matrix[updated_path[first_node]][updated_path[(first_node - 1) % len(cycle)]] + \
-            distance_matrix[updated_path[second_node-1]][updated_path[(second_node) % len(cycle)]]
+    gain = 0
+    if (second_node - 1) % len(cycle) != first_node:
+        gain += distance_matrix[cycle[first_node]][cycle[(first_node - 1) % len(cycle)]] + \
+                distance_matrix[cycle[second_node-1]][cycle[(second_node) % len(cycle)]]
+
+        gain -= distance_matrix[updated_path[first_node]][updated_path[(first_node - 1) % len(cycle)]] + \
+                distance_matrix[updated_path[second_node-1]][updated_path[(second_node) % len(cycle)]]
 
     return gain
 
