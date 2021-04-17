@@ -9,7 +9,7 @@ from lab1.distance_counter import count_dist, calculate_distance
 from lab1.greedy_cycle import greedy_cycle_propose
 from lab1.readFile import read_file
 from lab1.visualize import animate, visualize, visualize2
-from lab2.local_search import greedy, steepest, random_walk
+from lab2.local_search import greedy, steepest_lab2, random_walk
 from lab2.propose import propose_in_route, propose_between_routes
 
 
@@ -72,13 +72,13 @@ if __name__ == '__main__':
     # path2 = path[50:]
 
     # for k-regret
-    # history, picked_nodes = k_regret_connector([greedy_cycle_propose,
-    #                                             greedy_cycle_propose],
-    #                                            distance_matrix, start_with=[95, 80], k=1)
-    #
-    # animate(history[-1:], coordinates, cycle=[True, True])
-    # execute_example(distance_matrix, steepest, propose_between_routes, history[-1][0], history[-1][1], history)
-    # animate(history[-1:], coordinates, cycle=[True, True])
+    history, picked_nodes = k_regret_connector([greedy_cycle_propose,
+                                                greedy_cycle_propose],
+                                               distance_matrix, start_with=[95, 80], k=1)
+
+    animate(history[-1:], coordinates, cycle=[True, True])
+    execute_example(distance_matrix, steepest_lab2, propose_between_routes, history[-1][0], history[-1][1], history)
+    animate(history[-1:], coordinates, cycle=[True, True])
 
 # random
 # 1 29978.0,27211.0,2767.0,[[41, 24]]

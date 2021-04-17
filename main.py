@@ -6,7 +6,22 @@ from lab1.greedy_cycle import greedy_cycle_propose
 from lab1.readFile import read_file
 from lab1.visualize import animate
 from lab2.local_search import steepest_lab2
-from lab2.propose import propose_between_routes
+from lab3.effectiveness_improvement import lm_algorithm
+from lab3.propose import propose_between_routes
+
+
+def generate_random_starting_paths(size=100):
+    path = list(range(size))
+    random.shuffle(path)
+    path_first_part = path[:int(size/2)]
+    path_second_part = path[int(size/2):]
+    history = [[path_first_part[:1], path_second_part[:1]]]
+    for i in range(2, int(size/2+1)):
+        history.append([path_first_part[:i], path_second_part[:(i - 1)]])
+        history.append([path_first_part[:i], path_second_part[:i]])
+
+    return path_first_part, path_second_part, history
+
 
 if __name__ == '__main__':
     # data_set = 'kroB'
@@ -15,12 +30,15 @@ if __name__ == '__main__':
     distance_matrix = count_dist(coordinates)
 
     # startujemy z losowych rozwiązań
-    path = list(range(100))
-    random.shuffle(path)
-    path1 = path[:50]
-    path2 = path[50:]
+    path1, path2, history = generate_random_starting_paths(size=200)
 
     # LM
+    history_cycle = lm_algorithm(distance_matrix,
+                                 path1, path2,
+                                 propose_between_routes,
+                                 history)
+
+    animate(history_cycle, coordinates, cycle=[True, True])
 
     # Ruchy kandydackie
 

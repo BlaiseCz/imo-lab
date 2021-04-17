@@ -1,8 +1,8 @@
 import itertools
 import random
+import numpy as np
 from copy import deepcopy
 
-from lab1.distance_counter import calculate_distance
 from lab2.local_search import set_ids_order
 
 def propose_nodes_switch(distance_matrix, cycle1: list, cycle2: list,
@@ -133,7 +133,10 @@ def switch_edges(cycle, distance_matrix, i1, i2):
 def propose_between_routes(distance_matrix, cycle1, cycle2):
     prod = list(itertools.product(range(len(cycle1)), range(len(cycle2))))
     random.shuffle(prod)
-    for i1, i2 in prod:
+    gains = np.zeros(len(prod))
+    i1s = np.zeros(len(prod))
+    i2s = np.zeros(len(prod))
+    for idx, (i1, i2) in enumerate(prod):
         gain = 0
         gain += distance_matrix[cycle1[i1]][cycle1[(i1 - 1) % len(cycle1)]] + \
                 distance_matrix[cycle1[i1]][cycle1[(i1 + 1) % len(cycle1)]] + \
@@ -145,5 +148,8 @@ def propose_between_routes(distance_matrix, cycle1, cycle2):
                 distance_matrix[cycle2[i2]][cycle1[(i1 - 1) % len(cycle1)]] + \
                 distance_matrix[cycle2[i2]][cycle1[(i1 + 1) % len(cycle1)]]
         # returning cycle1 index and cycle2 index to swap
-        yield gain, i1, i2, 2
+        gains[idx] = gain
+        i1s[idx] = i1
+        i2s[idx] = i2
+    return gains, i1s, i2s, 2
 
