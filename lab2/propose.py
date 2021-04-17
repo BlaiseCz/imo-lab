@@ -76,12 +76,11 @@ def switch_nodes_ver2(distance_matrix, cycle1, cycle2, city1, city2):
 
 def switch_nodes(cycle, distance_matrix, i1, i2):
     gain = 0
-    if (i1 - 1) % len(cycle) != i2:
+    if (i1 - 1) % len(cycle) != i2 and (i2 - 1) % len(cycle) != i1:
         gain += distance_matrix[cycle[i1]][cycle[(i1 - 1) % len(cycle)]] + \
                 distance_matrix[cycle[i2]][cycle[(i2 + 1) % len(cycle)]]
         gain -= distance_matrix[cycle[i1]][cycle[(i2 + 1) % len(cycle)]] + \
                 distance_matrix[cycle[i2]][cycle[(i1 - 1) % len(cycle)]]
-    if (i2 - 1) % len(cycle) != i1:
         gain += distance_matrix[cycle[i1]][cycle[(i1 + 1) % len(cycle)]] + \
                 distance_matrix[cycle[i2]][cycle[(i2 - 1) % len(cycle)]]
         gain -= distance_matrix[cycle[i1]][cycle[(i2 - 1) % len(cycle)]] + \
