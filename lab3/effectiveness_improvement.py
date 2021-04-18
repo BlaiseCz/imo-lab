@@ -71,10 +71,12 @@ def lm_algorithm_ver2(distance_matrix, path1, path2, propose_method):
 
         #TODO: Zrób pętlę która usuwa jak i1 albo i2 jest w affected_nodes
         # teraz nie działa bo jak usuwa to indeks i się nie zgadza
+        todelete = []
         for i in range(len(propositions)):
             if propositions[i][1] in affected_nodes or \
                propositions[i][2] in affected_nodes:
-                propositions = np.delete(propositions, i, axis=0)
+                todelete.append(i)
+        propositions = np.delete(propositions, todelete, axis=0)
         # propositions = proposprawdz czy nie ma konfliktu z floatamisitions[propositions[..., 1] not in affected_nodes]
 
         # propositions = propositions[propositions[..., 2] not in affected_nodes]
