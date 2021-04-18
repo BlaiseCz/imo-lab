@@ -16,8 +16,6 @@ def propose_nodes_switch(distance_matrix, cycle1: list, cycle2: list,
         proposer = itertools.product(fresh, set(cycle1+cycle2) - fresh)
 
     for node1, node2 in proposer:
-        if node1 == node2:
-            print(node1, node2)
         # sprawdzamy w których cyklach są wybrane node'y
         where = []
         if node1 in cycle1:
@@ -41,6 +39,8 @@ def propose_nodes_switch(distance_matrix, cycle1: list, cycle2: list,
             node1, node2 = node2, node1
             i1, i2 = i2, i1
             where = [0,1]
+
+        if where == [0,1]:
             num = 2
             gain = gain_switch_nodes_between(distance_matrix, cycle1, cycle2, i1,i2)
 
