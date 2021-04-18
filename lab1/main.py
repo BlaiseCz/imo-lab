@@ -13,9 +13,11 @@ def calculate_path_dist(history_cycles, distance_matrix):
     return distance1, distance2
 
 
+
+
 if __name__ == '__main__':
-    data_set = 'kroB'
-    overview, coordinates = read_file('data/' + data_set + '100.tsp')
+    data_set = 'kroA'
+    overview, coordinates = read_file('data/' + data_set + '200.tsp')
     print(overview)
     distance_matrix = count_dist(coordinates)
     # resc, histc = greedy_cycle(distance_matrix, start_with=10)
@@ -37,6 +39,8 @@ if __name__ == '__main__':
     np.savetxt('greedy_cycle-' + data_set + '.csv', np_result, delimiter=",", fmt="%s")
 
     results = []
+    times = []
+
     for x in range(100):
         history_cycle, picked_nodes = k_regret_connector([greedy_cycle_propose,
                                             greedy_cycle_propose],
@@ -44,7 +48,9 @@ if __name__ == '__main__':
 
         reg_gc_dist_1, reg_gc_dist_2 = calculate_path_dist(history_cycle[-1], distance_matrix)
         results.append([reg_gc_dist_1 + reg_gc_dist_2, picked_nodes])
-        animate(history_cycle, coordinates, cycle=[True, True])
+        # animate(history_cycle, coordinates, cycle=[True, True])
+        end = time.time()
+        times.append(end - start)
 
     np_result = np.array(results, dtype=object)
     print(f'k-regret greedy_cycle minimum {np_result[:, 0].min(axis=0)} | maximum {np_result[:, 0].max(axis=0)} | mean {np_result[:, 0].mean(axis=0)}')
