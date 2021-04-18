@@ -46,7 +46,7 @@ def lm_algorithm_ver2(distance_matrix, path1, path2, propose_method):
         # only changes with positive gain
         propositions = propositions[propositions[..., 0] > 0]
         # sorted from best to worst
-        propositions = np.sort(propositions, axis=0)
+        propositions = np.array(sorted(propositions.tolist()))
         propositions = np.flip(propositions, axis=0)
         gain, i1, i2, num = propositions[-1]
 
@@ -78,7 +78,7 @@ def lm_algorithm_ver2(distance_matrix, path1, path2, propose_method):
             if propositions[i][1] in affected_nodes or \
                propositions[i][2] in affected_nodes:
                 propositions = np.delete(propositions, i, axis=0)
-        # propositions = propositions[propositions[..., 1] not in affected_nodes]
+        # propositions = proposprawdz czy nie ma konfliktu z floatamisitions[propositions[..., 1] not in affected_nodes]
 
         # propositions = propositions[propositions[..., 2] not in affected_nodes]
         new_propositions = np.array(list(propose_method(distance_matrix, path1,
