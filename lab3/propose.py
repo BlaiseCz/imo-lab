@@ -8,7 +8,6 @@ from lab2.local_search import set_ids_order
 def propose_nodes_switch(distance_matrix, cycle1: list, cycle2: list,
                          fresh=set()):
     # jeżeli sprawdzamy wszystkie wierzchołki
-    print(fresh)
     if not fresh:
         proposer = itertools.combinations(cycle1 + cycle2, 2)
     # jeżeli proponujemy tylko z częścią wierzchołków (zamienione i ich sąsiedzi)
@@ -17,6 +16,8 @@ def propose_nodes_switch(distance_matrix, cycle1: list, cycle2: list,
         proposer = itertools.product(fresh, set(cycle1+cycle2) - fresh)
 
     for node1, node2 in proposer:
+        if node1 == node2:
+            print(node1, node2)
         # sprawdzamy w których cyklach są wybrane node'y
         where = []
         if node1 in cycle1:

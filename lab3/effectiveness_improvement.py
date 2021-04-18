@@ -57,26 +57,39 @@ def lm_algorithm_ver2(distance_matrix, path1, path2, propose_method):
                                   path2[i2-1], path2[i2], path2[i2+1]])
         # both from cycle1
         elif num == 0:
-            #FIXME: która funkcja to robiła?
-            swap_edges(path1, distance_matrix, i1, i2)
+            swap_edges(path1, i1, i2)
             affected_nodes = set([path1[i1-1], path1[i1], path1[i1+1],
                                   path1[i2-1], path1[i2], path1[i2+1]])
         elif num == 1:
-            swap_edges(path2, distance_matrix, i1, i2)
+            swap_edges(path2, i1, i2)
             affected_nodes = set([path2[i1-1], path2[i1], path2[i1+1],
                                   path2[i2-1], path2[i2], path2[i2+1]])
         else:
             print('Coś poszło nie tak bo num jest równe:', end='')
             print(num)
+            affected_nodes = set([])
+        np.delete(propositions, 0, axis=0)
 
         history.append((path1, path2))
-        #TODO: sprawdz czy nie ma konfliktu z floatami
-        propositions = propositions[propositions[..., 1] not in affected_nodes]
-        propositions = propositions[propositions[..., 2] not in affected_nodes]
+
+        #TODO: Zrób pętlę która usuwa jak i1 albo i2 jest w affected_nodes
+        # teraz nie działa bo jak usuwa to indeks i się nie zgadza
+        for i in range(len(propositions)):
+            if propositions[i][1] in affected_nodes or \
+               propositions[i][2] in affected_nodes:
+                propositions = np.delete(propositions, i, axis=0)
+        # propositions = propositions[propositions[..., 1] not in affected_nodes]
+
+        # propositions = propositions[propositions[..., 2] not in affected_nodes]
         new_propositions = np.array(list(propose_method(distance_matrix, path1,
                                                         path2,
                                                         fresh=affected_nodes)),
                                     dtype=np.int64)
         propositions = np.concatenate([propositions, new_propositions], axis=0)
     return history
+
+def swap_edges(cycle, i1, i2):
+    if i1 > i2:
+        i1, i2 = i2, i1
+    cycle[i1:i2+1] = np.flip(cycle[i1:i2+1])
 
