@@ -3,11 +3,12 @@ import random
 import numpy as np
 from copy import deepcopy
 
-# from lab2.local_search import set_ids_order
+from lab2.local_search import set_ids_order
 
 def propose_nodes_switch(distance_matrix, cycle1: list, cycle2: list,
                          fresh=set()):
     # jeżeli sprawdzamy wszystkie wierzchołki
+    print(fresh)
     if not fresh:
         proposer = itertools.combinations(cycle1 + cycle2, 2)
     # jeżeli proponujemy tylko z częścią wierzchołków (zamienione i ich sąsiedzi)
