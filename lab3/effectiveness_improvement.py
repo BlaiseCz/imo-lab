@@ -68,7 +68,9 @@ def lm_algorithm_ver2(distance_matrix, path1, path2, propose_method):
             print(num)
 
         history.append((path1, path2))
-
+        #TODO: sprawdz czy nie ma konfliktu z floatami
+        propositions = propositions[propositions[..., 1] not in affected_nodes]
+        propositions = propositions[propositions[..., 2] not in affected_nodes]
         new_propositions = np.array(list(propose_method(distance_matrix, path1,
                                                         path2, fresh=affected_nodes)))
         propositions = np.concatenate([propositions, new_propositions], axis=0)
