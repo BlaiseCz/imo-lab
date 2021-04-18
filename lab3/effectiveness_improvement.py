@@ -40,7 +40,8 @@ def lm_algorithm(distance_matrix,
 def lm_algorithm_ver2(distance_matrix, path1, path2, propose_method):
     history = [(path1, path2)]
     # gain, i1, i2, num
-    propositions = np.array(list(propose_method(distance_matrix, path1, path2)))
+    propositions = np.array(list(propose_method(distance_matrix, path1, path2)),
+                            dtype=np.int64)
     while propositions.size != 0:
         # only changes with positive gain
         propositions = propositions[propositions[..., 0] > 0]
@@ -65,6 +66,7 @@ def lm_algorithm_ver2(distance_matrix, path1, path2, propose_method):
             affected_nodes = set([path2[i1-1], path2[i1], path2[i1+1],
                                   path2[i2-1], path2[i2], path2[i2+1]])
         else:
+            print('Coś poszło nie tak bo num jest równe:', end='')
             print(num)
 
         history.append((path1, path2))
@@ -72,7 +74,9 @@ def lm_algorithm_ver2(distance_matrix, path1, path2, propose_method):
         propositions = propositions[propositions[..., 1] not in affected_nodes]
         propositions = propositions[propositions[..., 2] not in affected_nodes]
         new_propositions = np.array(list(propose_method(distance_matrix, path1,
-                                                        path2, fresh=affected_nodes)))
+                                                        path2,
+                                                        fresh=affected_nodes)),
+                                    dtype=np.int64)
         propositions = np.concatenate([propositions, new_propositions], axis=0)
     return history
 
