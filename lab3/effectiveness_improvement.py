@@ -53,17 +53,14 @@ def lm_algorithm_ver2(distance_matrix, path1, path2, propose_method):
         # two different cycles
         if num == 2:
             path1[i1], path2[i2] = path2[i2], path1[i1]
-            affected_nodes = set([path1[i1-1], path1[i1], path1[i1+1],
-                                  path2[i2-1], path2[i2], path2[i2+1]])
+            affected_nodes = {path1[i1 - 1], path1[i1], path1[i1 + 1], path2[i2 - 1], path2[i2], path2[i2 + 1]}
         # both from cycle1
         elif num == 0:
             swap_edges(path1, i1, i2)
-            affected_nodes = set([path1[i1-1], path1[i1], path1[i1+1],
-                                  path1[i2-1], path1[i2], path1[i2+1]])
+            affected_nodes = {path1[i1 - 1], path1[i1], path1[i1 + 1], path1[i2 - 1], path1[i2], path1[i2 + 1]}
         elif num == 1:
             swap_edges(path2, i1, i2)
-            affected_nodes = set([path2[i1-1], path2[i1], path2[i1+1],
-                                  path2[i2-1], path2[i2], path2[i2+1]])
+            affected_nodes = {path2[i1 - 1], path2[i1], path2[i1 + 1], path2[i2 - 1], path2[i2], path2[i2 + 1]}
         else:
             print('Coś poszło nie tak bo num jest równe:', end='')
             print(num)
