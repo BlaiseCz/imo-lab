@@ -6,8 +6,8 @@ from lab1.greedy_cycle import greedy_cycle_propose
 from lab1.readFile import read_file
 from lab1.visualize import animate
 from lab2.local_search import steepest_lab2
-from lab3.effectiveness_improvement import lm_algorithm
-from lab3.propose import propose_between_routes
+from lab3.effectiveness_improvement import lm_algorithm, lm_algorithm_ver2
+from lab3.propose import propose_between_routes, propose_nodes_switch
 
 
 def generate_random_starting_paths(size=100):
@@ -33,10 +33,13 @@ if __name__ == '__main__':
     path1, path2, history = generate_random_starting_paths(size=200)
 
     # LM
-    history_cycle = lm_algorithm(distance_matrix,
+    # history_cycle = lm_algorithm(distance_matrix,
+    #                              path1, path2,
+    #                              propose_nodes_switch,
+    #                              history)
+    history_cycle = lm_algorithm_ver2(distance_matrix,
                                  path1, path2,
-                                 propose_between_routes,
-                                 history)
+                                 propose_nodes_switch)
 
     animate(history_cycle, coordinates, cycle=[True, True])
 

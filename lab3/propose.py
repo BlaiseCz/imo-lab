@@ -3,7 +3,7 @@ import random
 import numpy as np
 from copy import deepcopy
 
-from lab2.local_search import set_ids_order
+# from lab2.local_search import set_ids_order
 
 def propose_nodes_switch(distance_matrix, cycle1: list, cycle2: list,
                          fresh=set()):
@@ -41,15 +41,16 @@ def propose_nodes_switch(distance_matrix, cycle1: list, cycle2: list,
             where = [0,1]
             num = 2
             gain = gain_switch_nodes_between(distance_matrix, cycle1, cycle2, i1,i2)
+
         # oba wierzchołki są w tym samym cyklu
         else:
             # oba wierzchołki są w cycle1
             if where[0] == 0:
-                gain = gain_switch_nodes(cycle1, distance_matrix, i1, i2)
+                gain = switch_edges(cycle1, distance_matrix, i1, i2)
                 num = 0
             # oba wierzchołki są w cycle2
             else:
-                gain = gain_switch_nodes(cycle2, distance_matrix, i1, i2)
+                gain = switch_edges(cycle2, distance_matrix, i1, i2)
                 num = 1
 
         yield gain, i1, i2, num

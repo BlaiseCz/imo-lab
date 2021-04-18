@@ -7,7 +7,7 @@ def lm_algorithm(distance_matrix,
                  path1, path2,
                  propose_method,
                  history):
-    gain, i1, i2, num = propose_method(distance_matrix, path1, path2)
+    gain, i1, i2, num = next(propose_method(distance_matrix, path1, path2))
     stacked_values = np.vstack((gain, i1, i2))
     lm_indexes = np.where(stacked_values[0, ...] > 0)
     LM_ = np.take(stacked_values, lm_indexes, axis=1).reshape(3, len(lm_indexes[0])).T
@@ -36,3 +36,33 @@ def lm_algorithm(distance_matrix,
                 change = False
 
     return history
+
+def lm_algorithm_ver2(distance_matrix, path1, path2, propose_method):
+    history = [(path1, path2)]
+    # gain, i1, i2, num
+    propositions = np.array(list(propose_method(distance_matrix, path1, path2)))
+    while propositions:
+        # only changes with positive gain
+        propositions = propositions[propositions[..., 0] > 0]
+        # sorted from best to worst
+        propositions = np.sort(propositions)[::-1]
+        gain, i1, i2, num = propositions[-1]
+
+        # two different cycles
+        if num == 2:
+            path1[i1], path2[i2] = path2[i2], path1[i1]
+        # both from cycle1
+        elif num == 0:
+            #FIXME: która funkcja to robiła?
+            swap_edges(path1, distance_matrix, i1, i2)
+        elif num == 1:
+            swap_edges(path2, distance_matrix, i1, i2)
+
+        history.append((path1, path2))
+
+        affected_nodes = set([i1-1, i1, i1+1, i2-1, i2, i2+1])
+        new_propositions = np.array(list(propose_method(distance_matrix, path1,
+                                                        path2, fresh=affected_nodes)))
+        propositions = np.concatenate([propositions, new_propositions], axis=0)
+    return history
+
