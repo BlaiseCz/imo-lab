@@ -5,12 +5,14 @@ def animate(history: list, coordinates: list, isCycle=[True, True]):
     """
     Funkcja do animacji/ wyświetlania rozwiązań.
 
-    history: historia (lista wersji) albo jedna wersja.
-    - każda wersja jest listą cykli
-    - każdy cykl jest listą wierzchołków
+    history: historia, wersja lub cykl
+    - historia: lista wersji
+    - wersja:   lista cykli
+    - cykl:     lista wierzchołków
 
-    isCycle: lista Booleanów określająca czy coś jest cyklem czy ścieżką, albo
-    jeden Boolean (jeżeli jest tylko jeden cykl/ścieżka).
+    isCycle: Boolean lub lista Booleanów o długości równej ilości cykli w
+    każdej wersji. Określa, czy każdy kolejny cykl ma być wyświetlany jako
+    ścieżka czy cykl.
     """
     if type(history[0]) is not list:
         # jeżeli history to cykl
@@ -86,8 +88,7 @@ def animate(history: list, coordinates: list, isCycle=[True, True]):
     plt.show()
 
 if __name__ == '__main__':
-    from read_file import read_file
-    from distance import create_distance_matrix
+    from .read_file import read_file
     _, coordinates = read_file('../data/kroA100.tsp')
 
     cycle1 = list(range(50))
