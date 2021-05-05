@@ -88,7 +88,7 @@ def animate(history: list, coordinates: list, isCycle=[True, True]):
     plt.show()
 
 if __name__ == '__main__':
-    from .read_file import read_file
+    from read_file import read_file
     _, coordinates = read_file('../data/kroA100.tsp')
 
     cycle1 = list(range(50))
