@@ -29,11 +29,11 @@ def change_edges_(move_type: int, i1, i2, cycle1, cycle2):
     elif move_type == 1:
         cycle2[i1:i2+1] = reversed(cycle2[i1:i2+1])
     if move_type == 2:
-        cycle1[i1], cycle2[i2] = cycle1[i2], cycle2[i1]
+        cycle1[i1], cycle2[i2] = cycle2[i2], cycle1[i1]
 
 def change_edges(move_type: int, i1, i2, cycle1, cycle2):
     """
-    (Zwraca rezultat operacji) Wykonaj ruch zaproponowany przez funkcję edges.
+    (Zwraca kopię) Wykonaj ruch zaproponowany przez funkcję edges.
     """
     cyclea = deepcopy(cycle1)
     cycleb = deepcopy(cycle2)
