@@ -9,6 +9,7 @@ def steepest(distance_matrix, cycle1, cycle2):
     while True:
         distance_before = calculate_distance(distance_matrix, (c1, c2))
         propositions: list = list(edges(c1, c2))
+
         options = []
         for p in propositions:
             dist = calculate_distance(distance_matrix, change_edges(p[0], p[1], p[2], c1, c2))
@@ -17,6 +18,11 @@ def steepest(distance_matrix, cycle1, cycle2):
         distance_after, num, i1, i2 = min(options)
         if distance_before <= distance_after:
             break
+
         change_edges_(num, i1, i2, c1, c2)
-        history.append((c1, c2))
+
+        history.append([c1, c2])
+        print(distance_after)
     return history
+
+# powinien brać wszystkie propozycje i wybierać najlepszą spośród edges i nodes

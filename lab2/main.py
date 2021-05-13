@@ -106,13 +106,7 @@ if __name__ == '__main__':
 
     algos = [
              [distance_matrix, greedy, propose_in_route,
-              "greedy_propose_in_route_random"],
-             [distance_matrix, greedy, propose_between_routes,
-              "greedy_propose_between_routes_random"],
-             [distance_matrix, steepest_lab2, propose_in_route,
-              "steepest_propose_in_route_random"],
-             [distance_matrix, steepest_lab2, propose_between_routes,
-              "steepest_propose_between_routes_random"]
+              "greedy_propose_in_route_random"]
              ]
 
     history_list = []

@@ -27,7 +27,7 @@ def animate(history: list, coordinates: list, isCycle=[True, True]):
             history = [history]
     if type(isCycle) not in (tuple, list):
         isCycle = [isCycle]
-    assert len(history[0]) == len(isCycle), 'ilość cykli nie pasuje do długości parametru isCycle!'
+    # assert len(history[0]) == len(isCycle), 'ilość cykli nie pasuje do długości parametru isCycle!'
     plots_num = len(history[0])
 
     # setting up aspects and limits
