@@ -1,7 +1,7 @@
 from ._dependencies import k_regret_connector, greedy_cycle_propose
 import random
 
-def k_regret(distance_matrix, k=1):
+def k_regret(distance_matrix, k=1, start_with=None):
     """
     Zwraca historię uzyskania rozwiązania początkowego za pomocą k-żalu.
 
@@ -9,7 +9,7 @@ def k_regret(distance_matrix, k=1):
     """
 
     return k_regret_connector([greedy_cycle_propose, greedy_cycle_propose],
-                              distance_matrix, k=k)[0]
+                              distance_matrix, k=k, start_with=start_with)[0]
 
 def random_path(distance_matrix):
     """

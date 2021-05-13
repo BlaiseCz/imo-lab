@@ -1,5 +1,5 @@
 from copy import deepcopy
-from propose import change_edges, edges, change_edges_
+from .propose import change_edges, edges, change_edges_
 from random import randint
 
 def perturbateSmall_(cycle1, cycle2, num_of_perturbations=5):
