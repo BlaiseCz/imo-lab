@@ -14,18 +14,18 @@ def animate(history: list, coordinates: list, isCycle=[True, True]):
     każdej wersji. Określa, czy każdy kolejny cykl ma być wyświetlany jako
     ścieżka czy cykl.
     """
-    if type(history[0]) is not list:
+    if type(history[0]) not in (tuple, list):
         # jeżeli history to cykl
         history = [[history]]
-    elif type(history[0][0]) is not list:
+    elif type(history[0][0]) not in (tuple, list):
         # jeżeli history to lista cykli
-        if type(isCycle) is not list or len(isCycle) == 1:
+        if type(isCycle) not in (tuple, list) or len(isCycle) == 1:
             # jeżeli history to historia jednego cyklu
             history = [[h] for h in history]
         else:
             # jeżeli history to kilka cykli (nie historia!)
             history = [history]
-    if type(isCycle) is not list:
+    if type(isCycle) not in (tuple, list):
         isCycle = [isCycle]
     assert len(history[0]) == len(isCycle), 'ilość cykli nie pasuje do długości parametru isCycle!'
     plots_num = len(history[0])
@@ -89,10 +89,13 @@ def animate(history: list, coordinates: list, isCycle=[True, True]):
 
 if __name__ == '__main__':
     from read_file import read_file
-    _, coordinates = read_file('../data/kroA100.tsp')
+    _, coordinates = read_file('../data/kroA200.tsp')
 
-    cycle1 = list(range(50))
-    cycle2 = list(range(50, 100))
+    cycle1 = list(range(100))
+    cycle2 = list(range(100, 200))
 
-    animate([cycle1, cycle2], coordinates, isCycle=[True, True])
+    res = 5*[[cycle1, cycle2]]
+    import numpy as np
+    print(np.array(res).shape)
+    animate(res, coordinates, isCycle=[True, True])
 
