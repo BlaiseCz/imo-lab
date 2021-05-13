@@ -45,3 +45,41 @@ def change_edges(move_type: int, i1, i2, cycle1, cycle2):
     if move_type == 2:
         cyclea[i1], cycleb[i2] = cycleb[i2], cyclea[i1]
     return cyclea, cycleb
+
+def compute_gain(distance_matrix: list, move_type: int, i1: int, i2: int, cycle1: list, cycle2: list):
+    """
+    Oblicza gaina jakiego uzyskamy ze zrobienia ruchu zaproponowanego przez
+    edges.
+    """
+
+    gain = 0
+    # Poprzedniki i następniki
+    i1l = (i1-1)%len(cycle1)
+    i1r = (i1+1)%len(cycle1)
+    i2l = (i2-1)%len(cycle1)
+    i2r = (i2+1)%len(cycle1)
+
+    # Wymiana cykli
+    if move_type == 2:
+        # usunięcie połączenia z cyklu 1
+        gain += distance_matrix[cycle1[i1l]][cycle1[i1]]
+        gain += distance_matrix[cycle1[i1r]][cycle1[i1]]
+        # dodanie połączenia w cyklu 1
+        gain -= distance_matrix[cycle1[i1l]][cycle2[i2]]
+        gain -= distance_matrix[cycle1[i1r]][cycle2[i2]]
+
+        # usunięcie połączenia z cyklu 2
+        gain += distance_matrix[cycle2[i2l]][cycle2[i2]]
+        gain += distance_matrix[cycle2[i2r]][cycle2[i2]]
+        # dodanie połączenia w cyklu 2
+        gain -= distance_matrix[cycle2[i2l]][cycle1[i1]]
+        gain -= distance_matrix[cycle2[i2r]][cycle1[i1]]
+
+        return gain
+
+    # Wymiana krawędzi
+    if move_type == 0: cycle = cycle1
+    else: cycle = cycle2
+
+    return gain
+
