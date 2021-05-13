@@ -1,4 +1,4 @@
-from _dependencies import k_regret_connector, greedy_cycle_propose
+from ._dependencies import k_regret_connector, greedy_cycle_propose
 import random
 
 def k_regret(distance_matrix, k=1):
@@ -28,9 +28,9 @@ def random_path(distance_matrix):
     return history
 
 if __name__ == '__main__':
-    from read_file import read_file
-    from distance import create_distance_matrix
-    from visualize import animate
+    from .read_file import read_file
+    from .distance import create_distance_matrix
+    from .visualize import animate
     _, coordinates = read_file('../data/kroA100.tsp')
     distance_matrix = create_distance_matrix(coordinates)
     animate(random_path(distance_matrix), coordinates, [True, True])

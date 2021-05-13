@@ -38,9 +38,9 @@ def change_edges(move_type: int, i1, i2, cycle1, cycle2):
     cycleb = deepcopy(cycle2)
 
     if move_type == 0:
-        cyclea[i1:i2+1] = reversed(cyclea[i1:i2+1])
+        cyclea[i1:(i2+1)%len(cyclea)] = reversed(cyclea[i1:(i2+1)%len(cyclea)])
     elif move_type == 1:
-        cycleb[i1:i2+1] = reversed(cycleb[i1:i2+1])
+        cycleb[i1:(i2+1)%len(cyclea)] = reversed(cycleb[i1:(i2+1)%len(cyclea)])
     if move_type == 2:
-        cyclea[i1], cycleb[i2] = cyclea[i2], cycleb[i1]
+        cyclea[i1], cycleb[i2] = cycleb[i2], cyclea[i1]
     return cyclea, cycleb

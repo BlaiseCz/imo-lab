@@ -15,11 +15,11 @@ def create_distance_matrix(coordinates: list):
 
     return distance_matrix
 
-def calculate_distance(distance_matrix, cycles):
+def calculate_distance(distance_matrix, cycles) -> float:
     """
     Oblicza dystans na podstawie macierzy odległości i podanych cykli/ cyklu
     """
-    if cycles[0] is not list:
+    if type(cycles[0]) is not list:
         cycles = [cycles]
     res = 0
     for cycle in cycles:

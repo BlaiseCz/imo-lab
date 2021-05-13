@@ -1,5 +1,5 @@
 from copy import deepcopy
-from distance import calculate_distance
+from .distance import calculate_distance
 from random import sample
 
 
