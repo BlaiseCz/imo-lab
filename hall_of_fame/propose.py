@@ -4,6 +4,7 @@ from copy import deepcopy
 def edges(cycle1: list, cycle2: list):
     """
     Zaproponuj ruch zamiany krawędzi (lub wierzchołków jeśli między cyklami).
+    Zakłada że cykle są tej samej długości.
 
     Używa yielda:
 
@@ -38,9 +39,9 @@ def change_edges(move_type: int, i1, i2, cycle1, cycle2):
     cycleb = deepcopy(cycle2)
 
     if move_type == 0:
-        cyclea[i1:(i2+1)%len(cyclea)] = reversed(cyclea[i1:(i2+1)%len(cyclea)])
+        cyclea[i1:i2+1] = reversed(cyclea[i1:i2+1])
     elif move_type == 1:
-        cycleb[i1:(i2+1)%len(cyclea)] = reversed(cycleb[i1:(i2+1)%len(cyclea)])
+        cycleb[i1:i2+1] = reversed(cycleb[i1:i2+1])
     if move_type == 2:
         cyclea[i1], cycleb[i2] = cycleb[i2], cyclea[i1]
     return cyclea, cycleb
