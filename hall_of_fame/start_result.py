@@ -9,7 +9,7 @@ def k_regret(distance_matrix, k=1, start_with=None):
     """
 
     return k_regret_connector([greedy_cycle_propose, greedy_cycle_propose],
-                              distance_matrix, k=k, start_with=start_with)[0]
+                              distance_matrix, k=k, start_with=start_with)
 
 def random_path(distance_matrix):
     """

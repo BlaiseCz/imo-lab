@@ -83,9 +83,9 @@ def k_regret_connector(algos, distance_matrix, start_with=None, k=1):
 
     if start_with is not None:
         cycles = start_with
-    picked_nodes = deepcopy(cycles)
 
-    cycles = [[c] for c in cycles]
+    if type(cycles[0]) not in (list, tuple):
+        cycles = [[c] for c in cycles]
     visited = []
     for c in cycles:
         visited += c
@@ -121,4 +121,4 @@ def k_regret_connector(algos, distance_matrix, start_with=None, k=1):
         if len(cycles[best_algo]) >= len(distance_matrix) // len(cycles) \
                 and len(enough) + 1 != len(cycles):
             enough.append(best_algo)
-    return history, picked_nodes
+    return history
