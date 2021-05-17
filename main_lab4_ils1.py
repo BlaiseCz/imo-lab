@@ -19,13 +19,16 @@ def ils1(distance_matrix, time_allowed=10):
         perturbateSmall_(res[0], res[1])
     return res
 
-def ils2(distance_matrix, time_allowed=10):
+def ils2(distance_matrix, time_allowed=10, k_regret_only=False):
     res = k_regret(distance_matrix)[-1]
 
     start = time()
     checkpoint = time()
+    done = False
     while True:
-        res = steepest(distance_matrix, res[0], res[1])[-1]
+        if not (k_regret_only and done):
+            res = steepest(distance_matrix, res[0], res[1])[-1]
+            done = True
         checkpoint = time()
         if checkpoint-start > time_allowed:
             break
