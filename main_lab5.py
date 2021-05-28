@@ -81,3 +81,5 @@ if __name__ == '__main__':
         if y_res < parents[-1][0] and check_if_different_enough(y, parents):
             parents[-1] = (y_res, y)
 
+        parents = sorted(parents)
+
