@@ -33,13 +33,15 @@ if __name__ == '__main__':
     parents = [(calculate_distance(distance_matrix, p), p) for p in parents]
     parents = sorted(parents)
 
-    counter = 0
-
-    while counter < 10:
+    for _ in range(10):
         sol1, sol2 = pick_random_parents(parents)
 
         y = recombine(sol1, sol2)
 
         y = local_search(y)
+        y_res = calculate_distance(distance_matrix, y)
 
-        counter += 1
+        if y_res < parents[-1][0]:
+            #TODO: sprawdz czy jest wystarczająco różny
+            parents[-1] = (y_res, y)
+
