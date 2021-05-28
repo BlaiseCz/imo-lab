@@ -23,6 +23,32 @@ def pick_random_parents(parents):
 def recombine(sol1, sol2):
     pass
 
+def check_if_different_enough(solution, parents_with_res, min_edges_diff=4):
+    """
+    Liczymy ile jest krawędzi które nie występują w każdym rodzicu po kolei.
+    """
+    parents = [p[1] for p in parents_with_res]
+    for parent in parents:
+        new_edges_counter = 0
+        for cycle in solution:
+            for i, node in enumerate(cycle):
+                if node in parent[0]:
+                    idx = parent[0].index(node)
+                    if     cycle[(i+1) % len(cycle)] != \
+                       parent[0][(idx+1)%len(parent[0])]:
+                        new_edges_counter += 1
+                else:
+                    idx = parent[1].index(node)
+                    if     cycle[(i+1) % len(cycle)] != \
+                       parent[1][(idx+1)%len(parent[1])]:
+                        new_edges_counter += 1
+        if new_edges_counter < min_edges_diff:
+            return False
+
+    return True
+
+
+
 
 if __name__ == '__main__':
     data_set = 'kroB'
