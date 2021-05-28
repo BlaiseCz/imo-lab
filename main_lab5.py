@@ -4,6 +4,7 @@ from hall_of_fame.read_file import read_file
 from hall_of_fame.start_result import k_regret
 from hall_of_fame.visualize import animate
 from lab1.distance_counter import count_dist
+import random
 
 
 def generate_solutions(distance_matrix, iter=50):
@@ -16,7 +17,7 @@ def generate_solutions(distance_matrix, iter=50):
 
 
 def pick_random_parents(parents):
-    p1, p2 = []
+    p1, p2 = random.choices(parents, k=2)
     return p1, p2
 
 
