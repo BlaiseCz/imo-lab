@@ -22,8 +22,6 @@ def steepest(distance_matrix, cycle1, cycle2):
         change_edges_(num, i1, i2, c1, c2)
 
         history.append([c1, c2])
-        print(distance_after)
-
     return history
 
 # powinien brać wszystkie propozycje i wybierać najlepszą spośród edges i nodes

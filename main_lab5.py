@@ -33,7 +33,11 @@ def recombine(sol1, sol2):
         res.append(node_chosen)
         s[0].remove(node_chosen)
         s[1].remove(node_chosen)
-    return (res[:cycle_len], res[cycle_len:])
+    ret = (res[:cycle_len], res[cycle_len:])
+
+    if not ret:
+        print("here")
+    return ret
 
 
 def check_if_different_enough(solution, parents_with_res, min_edges_diff=4):
@@ -45,40 +49,52 @@ def check_if_different_enough(solution, parents_with_res, min_edges_diff=4):
         new_edges_counter = 0
         for cycle in solution:
             for i, node in enumerate(cycle):
-                if node in parent[0]:
-                    idx = parent[0].index(node)
-                    if cycle[(i + 1) % len(cycle)] != parent[0][(idx + 1) % len(parent[0])]:
-                        new_edges_counter += 1
-                else:
-                    idx = parent[1].index(node)
-                    if cycle[(i + 1) % len(cycle)] != parent[1][(idx + 1) % len(parent[1])]:
-                        new_edges_counter += 1
+                try:
+                    if node in parent[0]:
+                        idx = parent[0].index(node)
+                        if cycle[(i + 1) % len(cycle)] != parent[0][(idx + 1) % len(parent[0])]:
+                            new_edges_counter += 1
+                    else:
+                        idx = parent[1].index(node)
+                        if cycle[(i + 1) % len(cycle)] != parent[1][(idx + 1) % len(parent[1])]:
+                            new_edges_counter += 1
+                except Exception:
+                    print(node)
+                    print(parent)
+
         if new_edges_counter < min_edges_diff:
             return False
 
     return True
 
 
-if __name__ == '__main__':
-    data_set = 'kroB'
-    overview, coordinates = read_file('data/' + data_set + '100.tsp')
-    distance_matrix = create_distance_matrix(coordinates)
+import sys
 
-    parents = generate_solutions(distance_matrix, iter=10)
+if __name__ == '__main__':
+
+    data_set = 'kroB'
+    overview, coordinates = read_file('data/' + data_set + '200.tsp')
+    distance_matrix = create_distance_matrix(coordinates)
+    iter = 10
+    if sys.argv[1] is not None:
+        iter = int(sys.argv[1])
+
+    print('num of iterations ', iter)
+    parents = generate_solutions(distance_matrix, iter=iter)
     parents = [(calculate_distance(distance_matrix, p), p) for p in parents]
     parents = sorted(parents)
 
-    for _ in range(10):
+    for i in range(10):
         sol1, sol2 = pick_random_parents(parents)
 
         y = recombine(sol1[1], sol2[1])
         y = steepest(distance_matrix, y[0], y[1])
         y_res = calculate_distance(distance_matrix, y[-1])
 
-        # animate(y[-1], coordinates)
         if y_res < parents[-1][0] and check_if_different_enough(y[-1], parents):
-            parents[-1] = (y_res, y)
+            parents[-1] = (y_res, y[-1])
 
         parents = sorted(parents)
+        print(i)
 
-    print(parents)
+    print(min(parents))
