@@ -6,10 +6,10 @@ from hall_of_fame.visualize import animate
 import random
 
 
-def generate_solutions(distance_matrix, iter=20):
+def generate_solutions(distance_matrix, iterations=20):
     solutions = []
 
-    for _ in range(iter):
+    for _ in range(iterations):
         solutions.append(k_regret(distance_matrix)[-1])
 
     return solutions
@@ -75,17 +75,17 @@ if __name__ == '__main__':
     data_set = 'kroB'
     overview, coordinates = read_file('data/' + data_set + '200.tsp')
     distance_matrix = create_distance_matrix(coordinates)
-    iter = 20
+    iterations = 20
 
     try:
         if sys.argv[1] is not None:
-            iter = int(sys.argv[1])
-        print('parameter passed ', iter)
+            iterations = int(sys.argv[1])
+        print('parameter passed ', iterations)
     except IndexError:
         print('no parameters passed...')
 
-    print('num of iterations ', iter)
-    parents = generate_solutions(distance_matrix, iter=iter)
+    print('num of iterations ', iterations)
+    parents = generate_solutions(distance_matrix, iterations=iterations)
     parents = [(calculate_distance(distance_matrix, p), p) for p in parents]
     parents = sorted(parents)
 
