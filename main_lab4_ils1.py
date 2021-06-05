@@ -38,13 +38,13 @@ def ils2(distance_matrix, time_allowed=10, k_regret_only=False):
 
 if __name__ == '__main__':
     data_set = 'kroB'
-    overview, coordinates = read_file('data/' + data_set + '200.tsp')
+    overview, coordinates = read_file('./data/' + data_set + '200.tsp')
     distance_matrix = count_dist(coordinates)
 
     # # MSLS:
     # msls_results = []
     # for i in range(10):
-    c1, c2 = ils2(distance_matrix)
+    c1, c2 = ils1(distance_matrix)
     dist = calculate_distance(distance_matrix, c1) + \
            calculate_distance(distance_matrix,c2)
     print(dist)
